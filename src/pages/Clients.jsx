@@ -8,46 +8,38 @@ const Clients = () => {
             name: "FAB Frequency Allocator Board",
             industry: "Telecommunications",
             partnership: "Since 2018",
-            logo: "FAB",
             testimonial: "Ora-Tech's spectrum management solutions revolutionized our operations.",
-            icon: <FiServer className="text-blue-400" />
+            icon: <FiServer />
         },
         {
             name: "FIA Federal Investigation Agency",
             industry: "Government Security",
             partnership: "Since 2017",
-            logo: "FIA",
             testimonial: "Advanced cybersecurity solutions for our critical infrastructure.",
-            icon: <FiShield className="text-emerald-400" />
+            icon: <FiShield />
         },
         {
             name: "Quaid-e-Azam University",
             industry: "Education",
             partnership: "Since 2019",
-            logo: "QAU",
             testimonial: "Transformed our campus with cutting-edge educational technology.",
-            icon: <FiBook className="text-purple-400" />
+            icon: <FiBook />
         },
         {
             name: "CTPA Central Power Purchasing Agency",
             industry: "Energy",
             partnership: "Since 2016",
-            logo: "CTPA",
             testimonial: "Reliable energy management systems for national grid operations.",
-            icon: <FiZap className="text-yellow-400" />
+            icon: <FiZap />
         },
         {
             name: "Ufone",
             industry: "Telecommunications",
             partnership: "Since 2015",
-            logo: "UF",
             testimonial: "Scalable solutions that grew with our subscriber base.",
-            icon: <FiGlobe className="text-cyan-400" />
+            icon: <FiGlobe />
         },
-
     ];
-
-
 
     return (
         <div className="min-h-screen text-gray-300 px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
@@ -74,8 +66,6 @@ const Clients = () => {
                 </p>
             </motion.div>
 
-
-
             {/* Client Cards */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {clients.map((client, index) => (
@@ -99,16 +89,13 @@ const Clients = () => {
                         <div className="p-6">
                             {/* Top Section */}
                             <div className="flex items-start mb-6">
-                                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-500/20 to-blue-500/20 
-                          flex items-center justify-center text-2xl font-bold text-white mr-4 shadow-inner">
-                                    {client.logo}
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500/30 to-blue-500/30 
+                          flex items-center justify-center text-3xl text-white mr-4 shadow-lg shadow-emerald-500/30">
+                                    {client.icon}
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-semibold text-white">{client.name}</h3>
-                                    <div className="flex items-center mt-1">
-                                        <div className="mr-2 text-emerald-400">{client.icon}</div>
-                                        <div className="text-sm text-emerald-400">{client.industry}</div>
-                                    </div>
+                                    <div className="text-sm text-emerald-400">{client.industry}</div>
                                     <div className="text-xs text-gray-500 mt-1">
                                         Partner {client.partnership}
                                     </div>
@@ -124,7 +111,6 @@ const Clients = () => {
                     </motion.div>
                 ))}
             </div>
-
 
             {/* CTA */}
             <motion.div

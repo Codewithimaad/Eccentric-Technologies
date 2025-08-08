@@ -246,14 +246,6 @@ const Navbar = () => {
                                     }}
                                     className="pt-6"
                                 >
-                                    <motion.a
-                                        href="#"
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className="block w-full px-6 py-3 text-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg text-lg font-semibold shadow-lg hover:shadow-blue-500/20 transition-all duration-300"
-                                    >
-                                        Apply Now
-                                    </motion.a>
                                 </motion.div>
 
                                 {/* Optional Social/Contact Links */}
