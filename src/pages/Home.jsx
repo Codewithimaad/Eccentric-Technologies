@@ -14,7 +14,6 @@ const Home = () => {
             <Featured />
             <TabbedContent />
             <StatsSection />
-            <TabbedContent />
             <CTASection />
         </div>
     );

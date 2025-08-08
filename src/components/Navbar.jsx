@@ -35,7 +35,7 @@ const Navbar = () => {
 
     return (
         <motion.nav
-            className="fixed w-full z-50 bg-gray-900/50 backdrop-blur-lg border-b border-white/10"
+            className="fixed w-full z-50 backdrop-blur-lg border-b border-white/10"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -148,7 +148,7 @@ const Navbar = () => {
                                 duration: 0.35,
                                 ease: [0.16, 1, 0.3, 1] // Custom bezier curve for smooth motion
                             }}
-                            className="fixed top-0 right-0 h-screen w-full max-w-md bg-gray-900/95 backdrop-blur-lg z-50 shadow-2xl border-l border-gray-800 overflow-y-auto"
+                            className="fixed top-0 right-0 h-screen w-full max-w-md bg-black z-50 shadow-2xl border-l border-gray-800 overflow-y-auto"
                         >
                             {/* Modern Close Button */}
                             <div className="flex justify-end p-4">

@@ -1,30 +1,39 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiMapPin, FiPhone, FiMail, FiSend } from 'react-icons/fi';
+import React, { useEffect, useRef, useState } from "react";
+import { FiMapPin, FiPhone, FiMail, FiSend } from "react-icons/fi";
+
+const locations = [
+    {
+        city: "Islamabad Office",
+        address: "3rd Floor, Beverley Centre, Jinnah Avenue, F-6/1",
+        postal: "Islamabad 44000-Pakistan",
+        phone: "(+92-51) 111-672-253 (111-ORACLE)",
+        tel: "(051) 2814481-89",
+        fax: "(+92-51) 2814481",
+    },
+];
 
 const Contact = () => {
-    const locations = [
+    const ref = useRef();
+    const [isVisible, setIsVisible] = useState(false);
 
-        {
-            city: "Islamabad Office",
-            address: "3rd Floor, Beverley Centre, Jinnah Avenue, F-6/1",
-            postal: "Islamabad 44000-Pakistan",
-            phone: "(+92-51) 111-672-253 (111-ORACLE)",
-            tel: "(051) 2814481-89",
-            fax: "(+92-51) 2814481"
-        },
-
-    ];
+    // Intersection Observer to add fade/slide on scroll
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
+            { threshold: 0.1 }
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, []);
 
     return (
-        <div className="min-h-screen text-gray-300 px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <div
+            ref={ref}
+            className={`min-h-screen text-gray-300 px-4 sm:px-6 lg:px-8 py-12 sm:py-20 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+        >
             {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-16"
-            >
+            <div className="text-center mb-16">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-400">
                         Contact Eccentric Technologies
@@ -33,19 +42,15 @@ const Contact = () => {
                 <p className="text-lg text-gray-400 max-w-3xl mx-auto">
                     Reach out to our global offices or send us a message directly
                 </p>
-            </motion.div>
+            </div>
 
             <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
                 {/* Location Cards */}
                 <div className="grid md:grid-cols-2 gap-6">
                     {locations.map((location, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.15 }}
-                            whileHover={{ y: -5 }}
-                            className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-6 shadow-lg hover:shadow-emerald-500/10 transition-all"
+                            className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-6 shadow-lg hover:shadow-emerald-500/20 transition-shadow transform hover:-translate-y-1 duration-300 cursor-pointer"
                         >
                             <div className="flex items-center mb-4">
                                 <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 mr-4">
@@ -75,22 +80,20 @@ const Contact = () => {
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 
                 {/* Contact Form */}
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-8 shadow-lg"
-                >
+                <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-8 shadow-lg transition-transform duration-300 hover:scale-[1.02]">
                     <h2 className="text-2xl font-bold text-white mb-6">Send us a message</h2>
 
                     <form className="space-y-6">
                         <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">
+                            <label
+                                htmlFor="name"
+                                className="block text-sm font-medium text-gray-400 mb-1"
+                            >
                                 Name
                             </label>
                             <input
@@ -102,7 +105,10 @@ const Contact = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-400 mb-1">
+                            <label
+                                htmlFor="phone"
+                                className="block text-sm font-medium text-gray-400 mb-1"
+                            >
                                 Phone
                             </label>
                             <input
@@ -114,7 +120,10 @@ const Contact = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">
+                            <label
+                                htmlFor="email"
+                                className="block text-sm font-medium text-gray-400 mb-1"
+                            >
                                 Email
                             </label>
                             <input
@@ -126,7 +135,10 @@ const Contact = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-1">
+                            <label
+                                htmlFor="message"
+                                className="block text-sm font-medium text-gray-400 mb-1"
+                            >
                                 Message
                             </label>
                             <textarea
@@ -137,17 +149,15 @@ const Contact = () => {
                             ></textarea>
                         </div>
 
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                        <button
                             type="submit"
-                            className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg shadow-lg hover:shadow-emerald-500/20 transition-all flex items-center justify-center"
+                            className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg shadow-lg hover:shadow-emerald-500/30 transition-transform duration-150 active:scale-95 flex items-center justify-center"
                         >
                             <FiSend className="mr-2" />
                             Send Message
-                        </motion.button>
+                        </button>
                     </form>
-                </motion.div>
+                </div>
             </div>
         </div>
     );

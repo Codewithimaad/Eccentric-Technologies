@@ -1,52 +1,55 @@
 import React from "react";
-import { motion, useInView } from "framer-motion";
-
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
     return (
-        <section className="relative  text-white overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5"></div>
-            <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-10"></div>
+        <section className="relative text-white overflow-hidden ">
 
-            <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 lg:px-8 relative z-10">
-                <div className="text-center">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-6xl font-bold mb-6"
+
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-28 md:py-36 relative z-10 text-center">
+                <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
+                        Innovating Digital Excellence
+                    </span>
+                </motion.h1>
+
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 1 }}
+                    className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300 font-light tracking-wide"
+                >
+                    We deliver enterprise-grade solutions that transform businesses through cutting-edge technology.
+                </motion.p>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                    className="mt-12 flex flex-col sm:flex-row justify-center gap-6"
+                >
+                    <button
+                        className="px-10 py-4 bg-emerald-500 hover:bg-emerald-600 shadow-lg shadow-emerald-500/40 rounded-lg text-white font-semibold transition-all duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-white">
-                            Innovating Digital Excellence
-                        </span>
-                    </motion.h1>
+                        Explore Solutions
+                    </button>
 
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1, transition: { delay: 0.2 } }}
-                        className="text-xl text-gray-300 max-w-3xl mx-auto mb-10"
+                    <button
+                        className="px-10 py-4 bg-transparent border-2 border-gray-300 rounded-lg text-gray-300 font-semibold hover:bg-gray-700 hover:text-white transition-all duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        We deliver enterprise-grade solutions that transform businesses through technology.
-                    </motion.p>
-
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="px-8 py-3 bg-white/10 backdrop-blur-sm rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-all"
-                        >
-                            Explore Solutions
-                        </motion.button>
-
-                        <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all"
-                        >
-                            Contact Us
-                        </motion.button>
-                    </div>
-                </div>
+                        Contact Us
+                    </button>
+                </motion.div>
             </div>
         </section>
     );

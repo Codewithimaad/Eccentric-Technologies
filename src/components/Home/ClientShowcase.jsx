@@ -1,27 +1,34 @@
 import React from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
+const clients = [
+    { name: "Client 1", logo: "https://via.placeholder.com/100x40?text=Client+1" },
+    { name: "Client 2", logo: "https://via.placeholder.com/100x40?text=Client+2" },
+    { name: "Client 3", logo: "https://via.placeholder.com/100x40?text=Client+3" },
+    { name: "Client 4", logo: "https://via.placeholder.com/100x40?text=Client+4" },
+    { name: "Client 5", logo: "https://via.placeholder.com/100x40?text=Client+5" },
+    { name: "Client 6", logo: "https://via.placeholder.com/100x40?text=Client+6" },
+];
 
 const ClientsShowcase = () => {
-    const clients = ["Client 1", "Client 2", "Client 3", "Client 4", "Client 5", "Client 6"];
-
     return (
-        <section className="py-16 border-t border-b border-white/10">
+        <section className="py-20 border-t border-b border-gray-800 bg-gradient-to-b from-gray-900 to-gray-800">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <h2 className="text-center text-sm font-semibold tracking-wider text-gray-400 mb-12">
-                    TRUSTED BY INDUSTRY LEADERS
+                <h2 className="text-center text-xs sm:text-sm font-semibold tracking-widest text-gray-400 uppercase mb-16">
+                    Trusted by Industry Leaders
                 </h2>
 
-                <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
-                    {clients.map((client, index) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-10 items-center">
+                    {clients.map(({ name, logo }, index) => (
                         <motion.div
                             key={index}
-                            whileHover={{ scale: 1.1 }}
-                            className="flex justify-center"
+                            whileHover={{ scale: 1.1, boxShadow: "0 10px 20px rgba(16, 185, 129, 0.4)" }}
+                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            className="flex justify-center items-center bg-gray-700/20 rounded-lg border border-gray-700/40 p-4 cursor-pointer"
+                            aria-label={`Logo of ${name}`}
+                            title={name}
                         >
-                            <div className="h-12 w-full bg-white/5 rounded-lg flex items-center justify-center border border-white/10">
-                                <span className="text-white/80 font-medium">{client}</span>
-                            </div>
+                            <img src={logo} alt={name} className="max-h-10 object-contain" />
                         </motion.div>
                     ))}
                 </div>
