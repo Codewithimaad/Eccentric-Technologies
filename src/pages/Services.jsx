@@ -188,8 +188,8 @@ const Services = () => {
                     <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-emerald-400/70 ml-4"></div>
                 </div>
 
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white/90 mb-8">
-                    <span className="bg-clip-text text-transparent bg-purple-600/90">
+                <h1 className="text-4xl sm:text-6xl lg:text-6xl xl:text-7xl font-extrabold text-white/90 mb-8">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
                         OUR SERVICES
                     </span>
                 </h1>

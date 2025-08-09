@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiMapPin, FiPhone, FiMail, FiSend } from "react-icons/fi";
+import emailjs from "@emailjs/browser"; // Updated package
 
 const locations = [
     {
@@ -15,16 +16,63 @@ const locations = [
 const Contact = () => {
     const ref = useRef();
     const [isVisible, setIsVisible] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+    });
+    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState("");
 
-    // Intersection Observer to add fade/slide on scroll
+    // Animate on scroll
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => setIsVisible(entry.isIntersecting),
             { threshold: 0.1 }
         );
         if (ref.current) observer.observe(ref.current);
-        return () => observer.disconnect();
+        return () => {
+            if (ref.current) observer.unobserve(ref.current);
+        };
     }, []);
+
+    // Handle input changes
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    // Send email
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setStatus("");
+
+        emailjs
+            .send(
+                "service_hqhocvq", // EmailJS Service ID
+                "template_rf8whe6", // EmailJS Template ID
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    phone: formData.phone,
+                    message: formData.message,
+                },
+                "8l-yV8LEbjunC2bCg" // EmailJS Public Key
+            )
+            .then(() => {
+                setStatus("✅ Message sent successfully!");
+                setFormData({ name: "", phone: "", email: "", message: "" });
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => setStatus(""), 5000);
+            })
+            .catch(() => {
+                setStatus("❌ Failed to send message. Try again.");
+                setTimeout(() => setStatus(""), 5000);
+            })
+            .finally(() => setLoading(false));
+    };
 
     return (
         <div
@@ -50,7 +98,7 @@ const Contact = () => {
                     {locations.map((location, index) => (
                         <div
                             key={index}
-                            className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-6 shadow-lg hover:shadow-emerald-500/20 transition-shadow transform hover:-translate-y-1 duration-300 cursor-pointer"
+                            className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-6 shadow-lg hover:shadow-emerald-500/20 transition-shadow transform hover:-translate-y-1 duration-300"
                         >
                             <div className="flex items-center mb-4">
                                 <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 mr-4">
@@ -62,7 +110,6 @@ const Contact = () => {
                             <div className="space-y-3">
                                 <p className="text-gray-400">{location.address}</p>
                                 <p className="text-gray-400">{location.postal}</p>
-
                                 <div className="pt-3 border-t border-gray-700/30">
                                     <div className="flex items-center text-gray-400 mb-1">
                                         <FiPhone className="mr-2 text-blue-400" />
@@ -85,77 +132,67 @@ const Contact = () => {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-8 shadow-lg transition-transform duration-300 hover:scale-[1.02]">
+                <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/30 p-8 shadow-lg">
                     <h2 className="text-2xl font-bold text-white mb-6">Send us a message</h2>
 
-                    <form className="space-y-6">
-                        <div>
-                            <label
-                                htmlFor="name"
-                                className="block text-sm font-medium text-gray-400 mb-1"
-                            >
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Enter Full name"
-                                className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent text-white placeholder-gray-500"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="phone"
-                                className="block text-sm font-medium text-gray-400 mb-1"
-                            >
-                                Phone
-                            </label>
-                            <input
-                                type="tel"
-                                id="phone"
-                                placeholder="Enter Phone Number"
-                                className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent text-white placeholder-gray-500"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-400 mb-1"
-                            >
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Enter email address"
-                                className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent text-white placeholder-gray-500"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="message"
-                                className="block text-sm font-medium text-gray-400 mb-1"
-                            >
-                                Message
-                            </label>
-                            <textarea
-                                id="message"
-                                rows="4"
-                                placeholder="Enter your message"
-                                className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent text-white placeholder-gray-500"
-                            ></textarea>
-                        </div>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            id="name"
+                            aria-label="Full Name"
+                            placeholder="Full Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg text-white"
+                            required
+                        />
+                        <input
+                            type="tel"
+                            id="phone"
+                            aria-label="Phone Number"
+                            placeholder="Phone Number"
+                            pattern="[0-9+ ]*"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg text-white"
+                            required
+                        />
+                        <input
+                            type="email"
+                            id="email"
+                            aria-label="Email Address"
+                            placeholder="Email Address"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg text-white"
+                            required
+                        />
+                        <textarea
+                            id="message"
+                            aria-label="Message"
+                            rows="4"
+                            placeholder="Message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-gray-700/30 border border-gray-700/50 rounded-lg text-white"
+                            required
+                        ></textarea>
 
                         <button
                             type="submit"
-                            className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg shadow-lg hover:shadow-emerald-500/30 transition-transform duration-150 active:scale-95 flex items-center justify-center"
+                            disabled={loading}
+                            className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg shadow-lg flex items-center justify-center"
                         >
-                            <FiSend className="mr-2" />
-                            Send Message
+                            {loading ? "Sending..." : <><FiSend className="mr-2" /> Send Message</>}
                         </button>
+                        {status && (
+                            <p
+                                className={`text-sm mt-2 ${status.includes("✅") ? "text-green-400" : "text-red-400"
+                                    }`}
+                            >
+                                {status}
+                            </p>
+                        )}
                     </form>
                 </div>
             </div>

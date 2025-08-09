@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaAward, FaHandshake, FaRocket, FaTrophy } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Journey = () => {
     // Animation variants
@@ -313,9 +314,9 @@ const Journey = () => {
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 md:mb-4">
                         Ready to be part of our future journey?
                     </h3>
-                    <button className="px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 hover:shadow-emerald-500/20 text-sm md:text-base">
+                    <Link to='/contact' className="px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 hover:shadow-emerald-500/20 text-sm md:text-base">
                         Contact Us
-                    </button>
+                    </Link>
                 </motion.div>
             </div>
         </div>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiChevronRight, FiPlay } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
 
 const tabs = [
     {
@@ -21,8 +21,21 @@ const tabs = [
     },
 ];
 
+const videos = [
+    "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "https://www.youtube.com/embed/ysz5S6PUM-U",
+    "https://www.youtube.com/embed/oHg5SJYRHA0",
+    "https://www.youtube.com/embed/aqz-KE-bpKQ",
+];
+
 const TabbedContent = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [videoUrl, setVideoUrl] = useState("");
+
+    useEffect(() => {
+        const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+        setVideoUrl(randomVideo);
+    }, []);
 
     return (
         <section className="py-24 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800">
@@ -79,15 +92,20 @@ const TabbedContent = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* Video Placeholder */}
+                    {/* Video Iframe */}
                     <div className="lg:w-1/2 flex items-center justify-center">
-                        <div className="relative w-full max-w-xl aspect-video rounded-2xl bg-white/5 border border-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg transition-shadow hover:shadow-emerald-400/40 cursor-pointer">
-                            <button
-                                aria-label="Play Video"
-                                className="w-20 h-20 rounded-full bg-emerald-400 text-gray-900 flex items-center justify-center shadow-xl hover:bg-emerald-500 transition-colors"
-                            >
-                                <FiPlay className="w-8 h-8" />
-                            </button>
+                        <div className="relative w-full max-w-xl aspect-video rounded-2xl overflow-hidden border border-white/20 shadow-lg">
+                            {videoUrl && (
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={videoUrl}
+                                    title="Random Video"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
+                            )}
                         </div>
                     </div>
                 </div>
