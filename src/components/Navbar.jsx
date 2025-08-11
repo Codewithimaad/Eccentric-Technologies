@@ -1,12 +1,24 @@
+import React, { useState, useEffect } from "react";
+import Logo from '../assets/Logo.png'
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX, FiChevronDown, FiTwitter, FiLinkedin, FiMail } from "react-icons/fi";
+// Unicode icons since react-icons isn't available
+const MenuIcon = () => <span className="text-2xl">☰</span>;
+const CloseIcon = () => <span className="text-2xl">✕</span>;
+const ChevronDown = ({ isRotated }) => (
+    <span
+        className={`inline-block transition-transform duration-300 ${isRotated ? 'rotate-180' : ''}`}
+    >
+        ▼
+    </span>
+);
+const TwitterIcon = () => <span className="text-xl">🐦</span>;
+const LinkedinIcon = () => <span className="text-xl">💼</span>;
+const MailIcon = () => <span className="text-xl">✉️</span>;
 
-
-const Navbar = () => {
+const ModernNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [openSubmenu, setOpenSubmenu] = useState(null);
+    const [scrolled, setScrolled] = useState(false);
 
     const navItems = [
         { name: "HOME", href: "/" },
@@ -20,257 +32,297 @@ const Navbar = () => {
                 { name: "CLIENTS", href: "/clients" },
                 { name: "PARTNERS", href: "/partners" },
                 { name: "COMPANY POLICY", href: "/policy" },
-                { name: "COMPANY PROFILE", href: "/profile" },
-
+                { name: "COMPANY PROFILE", href: "/-company-profile" },
+                { name: "TECHNOLOGIES", href: "/technologies" },
             ]
         },
         { name: "ABOUT", href: "/about" },
         { name: "CONTACT", href: "/contact" },
-
     ];
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleSubmenu = (index) => {
         setOpenSubmenu(openSubmenu === index ? null : index);
     };
 
     return (
-        <motion.nav
-            className="fixed w-full z-50 backdrop-blur-lg border-b border-white/10"
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-            <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20 md:h-20">
-                    {/* Logo */}
-                    <motion.div
-                        className="flex-shrink-0"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        <a href="/" className="text-white font-bold text-xl flex items-center">
-                            <span className="bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent">
-                                ECCENTRIC TECHNOLGIES
-                            </span>
-                        </a>
-                    </motion.div>
+        <>
+            {/* Main Navbar */}
+            <nav
+                className={`fixed w-full z-50 transition-all duration-500 ${scrolled
+                    ? 'top-4 left-4 right-4 w-auto'
+                    : 'top-0 left-0 right-0'
+                    }`}
+            >
+                <div
+                    className={`mx-auto transition-all duration-500 ${scrolled
+                        ? 'max-w-6xl bg-gray-900/80 backdrop-blur-2xl border border-gray-700/50 rounded-3xl shadow-2xl shadow-cyan-500/10'
+                        : 'max-w-8xl bg-gray-900/60 backdrop-blur-xl border-b border-gray-700/30'
+                        }`}
+                >
+                    <div className="flex items-center justify-between h-20 px-6 lg:px-8">
+                        {/* Logo with enhanced styling */}
+                        <div className="flex-shrink-0 group cursor-pointer">
+                            <a href="/" className="flex items-center space-x-3">
+                                {/* Logo image container */}
+                                <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-cyan-500/30 group-hover:shadow-cyan-500/50 transition-all duration-300 group-hover:scale-110">
+                                    <img
+                                        src={Logo}  // <-- Replace this with your actual logo path
+                                        alt="Eccentric Technologies Logo"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div>
+                                    <span className="text-white font-black text-xl bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text">
+                                        ECCENTRIC
+                                    </span>
+                                    <div className="text-xs text-cyan-400 font-medium tracking-widest">
+                                        TECHNOLOGIES
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        {navItems.map((item, index) => (
-                            <div key={index} className="relative">
-                                {item.submenu ? (
-                                    <div className="relative group">
-                                        <button
-                                            onClick={() => toggleSubmenu(index)}
-                                            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center"
-                                        >
-                                            {item.name}
-                                            <motion.span
-                                                animate={{ rotate: openSubmenu === index ? 180 : 0 }}
-                                                transition={{ duration: 0.2 }}
-                                                className="ml-1"
+
+                        {/* Desktop Navigation */}
+                        <div className="hidden lg:flex items-center space-x-1">
+                            {navItems.map((item, index) => (
+                                <div key={index} className="relative">
+                                    {item.submenu ? (
+                                        <div className="relative group">
+                                            <button
+                                                onClick={() => toggleSubmenu(index)}
+                                                className="flex items-center space-x-2 px-6 py-3 rounded-2xl text-sm font-bold text-gray-300 hover:text-white hover:bg-gray-800/40 transition-all duration-300 group"
                                             >
-                                                <FiChevronDown size={16} />
-                                            </motion.span>
-                                        </button>
+                                                <span className="tracking-wide">{item.name}</span>
+                                                <ChevronDown isRotated={openSubmenu === index} />
+                                            </button>
 
-                                        <AnimatePresence>
+                                            {/* Enhanced Dropdown */}
                                             {openSubmenu === index && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -10 }}
-                                                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                                                    className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 border border-white/10"
-                                                >
-                                                    <div className="py-1">
+                                                <div className="absolute top-full left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-2xl border border-gray-700/50 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden animate-dropdown">
+                                                    <div className="p-2">
                                                         {item.submenu.map((subItem, subIndex) => (
                                                             <a
                                                                 key={subIndex}
                                                                 href={subItem.href}
-                                                                className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+                                                                className="block px-4 py-3 text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all duration-200 group"
                                                             >
-                                                                {subItem.name}
+                                                                <div className="flex items-center space-x-3">
+                                                                    <div className="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                                                    <span>{subItem.name}</span>
+                                                                </div>
                                                             </a>
                                                         ))}
                                                     </div>
-                                                </motion.div>
+                                                </div>
                                             )}
-                                        </AnimatePresence>
-                                    </div>
-                                ) : (
-                                    <a
-                                        href={item.href}
-                                        className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    >
-                                        {item.name}
-                                    </a>
-                                )}
-                            </div>
-                        ))}
+                                        </div>
+                                    ) : (
+                                        <a
+                                            href={item.href}
+                                            className="px-6 py-3 rounded-2xl text-sm font-bold text-gray-300 hover:text-white hover:bg-gray-800/40 transition-all duration-300 tracking-wide relative group"
+                                        >
+                                            {item.name}
+                                            <div className="absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
 
-                    </div>
 
-                    {/* Mobile menu button */}
-                    <div className="md:hidden flex items-center">
-                        <motion.button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
-                            whileTap={{ scale: 0.9 }}
-                        >
-                            {isOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
-                        </motion.button>
+                        </div>
+
+                        {/* Enhanced Mobile menu button */}
+                        <div className="lg:hidden flex items-center">
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="p-3 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 text-gray-400 hover:text-white hover:bg-gray-800/80 transition-all duration-300 hover:scale-110"
+                            >
+                                {isOpen ? <CloseIcon /> : <MenuIcon />}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </nav>
 
             {/* Modern Mobile Navigation */}
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        {/* Enhanced Backdrop with Blur */}
-                        <motion.div
-                            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                            onClick={() => setIsOpen(false)}
-                        />
+            {isOpen && (
+                <>
+                    {/* Enhanced Backdrop */}
+                    <div
+                        className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden animate-fade-in"
+                        onClick={() => setIsOpen(false)}
+                    />
 
-                        {/* Sleek Sidebar */}
-                        <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{
-                                duration: 0.35,
-                                ease: [0.16, 1, 0.3, 1] // Custom bezier curve for smooth motion
-                            }}
-                            className="fixed top-0 right-0 h-screen w-full max-w-md bg-black z-50 shadow-2xl border-l border-gray-800 overflow-y-auto"
-                        >
-                            {/* Modern Close Button */}
-                            <div className="flex justify-end p-4">
+                    {/* Floating Mobile Menu */}
+                    <div className="fixed top-24 right-4 w-80 max-w-[calc(100vw-2rem)] bg-gray-900/95 backdrop-blur-2xl border border-gray-700/50 rounded-3xl shadow-2xl shadow-black/50 z-50 lg:hidden overflow-hidden animate-slide-in">
+                        {/* Header */}
+                        <div className="p-6 border-b border-gray-700/50">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
+                                        <span className="text-white font-bold text-sm">E</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-white font-bold text-sm">ECCENTRIC</div>
+                                        <div className="text-xs text-cyan-400">TECHNOLOGIES</div>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="p-2 rounded-full hover:bg-gray-800 transition-all duration-200"
-                                    aria-label="Close menu"
+                                    className="p-2 rounded-xl bg-gray-800/50 text-gray-400 hover:text-white transition-colors duration-200"
                                 >
-                                    <FiX size={24} className="text-gray-400 hover:text-white" />
+                                    <CloseIcon />
                                 </button>
                             </div>
+                        </div>
 
-                            <div className="px-6 pb-8 space-y-1">
-                                {/* Navigation Items with Improved Spacing */}
-                                {navItems.map((item, index) => (
-                                    <div key={index} className="border-b border-gray-800/50 last:border-0">
-                                        {item.submenu ? (
-                                            <div>
-                                                <motion.button
-                                                    onClick={() => toggleSubmenu(index)}
-                                                    whileTap={{ scale: 0.98 }}
-                                                    className="w-full flex justify-between items-center text-left py-4 rounded-lg px-3 text-lg font-medium text-gray-200 hover:text-white hover:bg-gray-800/30 transition-colors duration-200"
-                                                >
-                                                    <span>{item.name}</span>
-                                                    <motion.span
-                                                        animate={{ rotate: openSubmenu === index ? 180 : 0 }}
-                                                        transition={{ duration: 0.2 }}
-                                                        className="text-gray-400"
-                                                    >
-                                                        <FiChevronDown size={18} />
-                                                    </motion.span>
-                                                </motion.button>
-
-                                                <AnimatePresence>
-                                                    {openSubmenu === index && (
-                                                        <motion.div
-                                                            initial={{ height: 0, opacity: 0 }}
-                                                            animate={{
-                                                                height: "auto",
-                                                                opacity: 1,
-                                                                transition: {
-                                                                    height: { duration: 0.3, ease: "easeInOut" },
-                                                                    opacity: { duration: 0.2, delay: 0.1 }
-                                                                }
-                                                            }}
-                                                            exit={{
-                                                                height: 0,
-                                                                opacity: 0,
-                                                                transition: {
-                                                                    height: { duration: 0.2 },
-                                                                    opacity: { duration: 0.1 }
-                                                                }
-                                                            }}
-                                                            className="overflow-hidden pl-2"
-                                                        >
-                                                            {item.submenu.map((subItem, subIndex) => (
-                                                                <motion.a
-                                                                    key={subIndex}
-                                                                    href={subItem.href}
-                                                                    initial={{ x: 10, opacity: 0 }}
-                                                                    animate={{
-                                                                        x: 0,
-                                                                        opacity: 1,
-                                                                        transition: { delay: 0.1 + subIndex * 0.05 }
-                                                                    }}
-                                                                    exit={{ opacity: 0 }}
-                                                                    className="block py-3 px-6 rounded-lg text-base font-medium text-gray-400 hover:text-white hover:bg-gray-800/20 transition-colors duration-150 ml-2 border-l border-gray-800/50"
-                                                                >
-                                                                    {subItem.name}
-                                                                </motion.a>
-                                                            ))}
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
-                                            </div>
-                                        ) : (
-                                            <motion.a
-                                                href={item.href}
-                                                whileTap={{ scale: 0.98 }}
-                                                className="block py-4 px-3 rounded-lg text-lg font-medium text-gray-200 hover:text-white hover:bg-gray-800/30 transition-colors duration-200"
+                        {/* Navigation Items */}
+                        <div className="p-4 max-h-96 overflow-y-auto">
+                            {navItems.map((item, index) => (
+                                <div key={index} className="mb-2">
+                                    {item.submenu ? (
+                                        <div>
+                                            <button
+                                                onClick={() => toggleSubmenu(index)}
+                                                className="w-full flex justify-between items-center p-4 rounded-2xl text-left font-bold text-gray-200 hover:text-white hover:bg-gray-800/50 transition-all duration-300 group"
                                             >
-                                                {item.name}
-                                            </motion.a>
-                                        )}
-                                    </div>
-                                ))}
+                                                <span>{item.name}</span>
+                                                <ChevronDown isRotated={openSubmenu === index} />
+                                            </button>
 
-                                {/* Prominent CTA Button */}
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{
-                                        opacity: 1,
-                                        y: 0,
-                                        transition: { delay: 0.2 }
-                                    }}
-                                    className="pt-6"
-                                >
-                                </motion.div>
+                                            {openSubmenu === index && (
+                                                <div className="mt-2 ml-4 space-y-1 animate-slide-down">
+                                                    {item.submenu.map((subItem, subIndex) => (
+                                                        <a
+                                                            key={subIndex}
+                                                            href={subItem.href}
+                                                            className="block p-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/30 transition-all duration-200 border-l-2 border-gray-700 hover:border-cyan-400"
+                                                        >
+                                                            {subItem.name}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <a
+                                            href={item.href}
+                                            className="block p-4 rounded-2xl font-bold text-gray-200 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
 
-                                {/* Optional Social/Contact Links */}
-                                <motion.div
-                                    className="flex justify-center space-x-4 pt-8"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1, transition: { delay: 0.3 } }}
-                                >
-                                    <a href="#" className="p-2 text-gray-400 hover:text-white transition-colors">
-                                        <FiTwitter size={20} />
-                                    </a>
-                                    <a href="#" className="p-2 text-gray-400 hover:text-white transition-colors">
-                                        <FiLinkedin size={20} />
-                                    </a>
-                                    <a href="#" className="p-2 text-gray-400 hover:text-white transition-colors">
-                                        <FiMail size={20} />
-                                    </a>
-                                </motion.div>
+                        {/* Footer */}
+                        <div className="p-6 border-t border-gray-700/50">
+
+                            <div className="flex justify-center space-x-4">
+                                <a href="#" className="p-3 rounded-xl bg-gray-800/50 text-gray-400 hover:text-white hover:bg-gray-800/80 transition-all duration-200">
+                                    <TwitterIcon />
+                                </a>
+                                <a href="#" className="p-3 rounded-xl bg-gray-800/50 text-gray-400 hover:text-white hover:bg-gray-800/80 transition-all duration-200">
+                                    <LinkedinIcon />
+                                </a>
+                                <a href="#" className="p-3 rounded-xl bg-gray-800/50 text-gray-400 hover:text-white hover:bg-gray-800/80 transition-all duration-200">
+                                    <MailIcon />
+                                </a>
                             </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </motion.nav>
+                        </div>
+                    </div>
+                </>
+            )}
+
+            <style jsx>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+
+                @keyframes slideInRight {
+                    from {
+                        opacity: 0;
+                        transform: translateX(100%) scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0) scale(1);
+                    }
+                }
+
+                @keyframes dropdownSlide {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px) scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                }
+
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        max-height: 0;
+                        transform: translateY(-10px);
+                    }
+                    to {
+                        opacity: 1;
+                        max-height: 400px;
+                        transform: translateY(0);
+                    }
+                }
+
+                .animate-fade-in {
+                    animation: fadeIn 0.3s ease-out forwards;
+                }
+
+                .animate-slide-in {
+                    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                }
+
+                .animate-dropdown {
+                    animation: dropdownSlide 0.3s ease-out forwards;
+                }
+
+                .animate-slide-down {
+                    animation: slideDown 0.3s ease-out forwards;
+                }
+
+                /* Custom scrollbar for mobile menu */
+                .overflow-y-auto::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                .overflow-y-auto::-webkit-scrollbar-track {
+                    background: rgba(55, 65, 81, 0.3);
+                    border-radius: 10px;
+                }
+
+                .overflow-y-auto::-webkit-scrollbar-thumb {
+                    background: rgba(6, 182, 212, 0.5);
+                    border-radius: 10px;
+                }
+
+                .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+                    background: rgba(6, 182, 212, 0.8);
+                }
+            `}</style>
+        </>
     );
 };
 
-export default Navbar;
+export default ModernNavbar;

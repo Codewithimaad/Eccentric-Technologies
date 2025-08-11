@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     return (
@@ -34,21 +35,15 @@ const HeroSection = () => {
                     transition={{ delay: 0.6, duration: 0.8 }}
                     className="mt-12 flex flex-col sm:flex-row justify-center gap-6"
                 >
-                    <button
+                    <Link to='/services'
                         className="px-10 py-4 bg-emerald-500 hover:bg-emerald-600 shadow-lg shadow-emerald-500/40 rounded-lg text-white font-semibold transition-all duration-300"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        Explore Solutions
-                    </button>
+                        Explore Services
+                    </Link>
 
-                    <button
-                        className="px-10 py-4 bg-transparent border-2 border-gray-300 rounded-lg text-gray-300 font-semibold hover:bg-gray-700 hover:text-white transition-all duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Contact Us
-                    </button>
+
                 </motion.div>
             </div>
         </section>

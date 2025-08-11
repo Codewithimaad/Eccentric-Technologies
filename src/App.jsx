@@ -12,6 +12,8 @@ import Clients from './pages/Clients';
 import About from './pages/About';
 import CompanyPolicy from './pages/CompanyPolicy';
 import Partners from './pages/Partners';
+import Technologies from './pages/Technologies'
+// import CompanyProfile from './pages/CompanyProfile'
 
 const App = () => {
   const floatingShapes = [
@@ -25,9 +27,9 @@ const App = () => {
 
   return (
     <Router>
-      <div className="overflow-x-hidden text-stone-300 antialiased font-prata">
+      <div className="overflow-x-hidden text-stone-300 antialiased font-prata relative min-h-screen">
         {/* Background */}
-        <div className="fixed inset-0 -z-10">
+        <div className="fixed inset-0 -z-20">
           <div className="relative h-full w-full bg-slate-950/100 overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
               {floatingShapes.map((shape, index) => (
@@ -50,6 +52,20 @@ const App = () => {
           </div>
         </div>
 
+        {/* Your custom animated background block */}
+        <div className="fixed inset-0 -z-10">
+          {/* Grid pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:80px_80px]" />
+
+          {/* Floating orbs */}
+          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full filter blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-20 w-72 h-72 bg-cyan-500/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
+
+          {/* Radial gradient overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)]" />
+        </div>
+
         <Navbar />
 
         <div className="pt-20 md:pt-24 px-4 sm:px-10 relative z-10">
@@ -63,6 +79,8 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/policy" element={<CompanyPolicy />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/technologies" element={<Technologies />} />
+            {/* <Route path="/company-profile" element={<CompanyProfile />} /> */}
 
           </Routes>
         </div>

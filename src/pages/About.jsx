@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FiUsers, FiInfo, FiMap, FiHeart } from "react-icons/fi";
+import { FiUsers, FiInfo, FiMap, FiHeart, FiBriefcase, FiAward, FiGlobe } from "react-icons/fi";
 
 const About = () => {
     const ref = useRef();
@@ -20,6 +20,33 @@ const About = () => {
         { icon: <FiInfo className="text-blue-400/20" size={50} />, position: "bottom-1/3 right-1/4", animationDelay: "3s" },
         { icon: <FiMap className="text-purple-400/20" size={45} />, position: "top-1/3 right-1/5", animationDelay: "6s" },
         { icon: <FiHeart className="text-cyan-400/20" size={60} />, position: "bottom-1/4 left-1/5", animationDelay: "9s" },
+    ];
+
+    const historyMilestones = [
+        {
+            year: "2017",
+            title: "Company Founded",
+            description: "Eccentric Technologies started with a passion for technology outcomes.",
+            icon: <FiBriefcase className="text-emerald-400" size={24} />
+        },
+        {
+            year: "2018",
+            title: "Strategic Partnership",
+            description: "Partnered with NCS, a leading database services company in the UK.",
+            icon: <FiGlobe className="text-blue-400" size={24} />
+        },
+        {
+            year: "2019",
+            title: "Enterprise Expansion",
+            description: "Expanded our team with experts from IBM, Apple, Oracle, and Microsoft.",
+            icon: <FiUsers className="text-purple-400" size={24} />
+        },
+        {
+            year: "Present",
+            title: "Industry Recognition",
+            description: "Trusted by clients like Burberry, Daily Mail, Wimbledon Tennis, and more.",
+            icon: <FiAward className="text-amber-400" size={24} />
+        }
     ];
 
     return (
@@ -62,6 +89,46 @@ const About = () => {
                 </p>
             </header>
 
+            {/* Company History Section */}
+            <section className="max-w-6xl mx-auto mb-20">
+                <div className="bg-gray-900/30 backdrop-blur-md rounded-2xl border border-gray-700/30 p-8">
+                    <h2 className="text-3xl font-bold text-white/90 mb-8 flex items-center">
+                        <FiMap className="mr-3 text-purple-400/80" size={28} />
+                        Our History
+                    </h2>
+
+                    <div className="relative">
+                        {/* Timeline line */}
+                        <div className="absolute left-8 top-0 h-full w-0.5 bg-gradient-to-b from-emerald-400/20 via-blue-400/20 to-purple-400/20"></div>
+
+                        <div className="space-y-8">
+                            {historyMilestones.map((milestone, index) => (
+                                <div key={index} className="relative pl-16 group">
+                                    {/* Timeline dot */}
+                                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center z-10">
+                                        {milestone.icon}
+                                    </div>
+
+                                    <div className={`p-6 rounded-xl border border-gray-700/30 bg-gradient-to-br ${index % 2 === 0 ? 'from-gray-800/30 to-gray-900/30' : 'from-gray-900/30 to-gray-800/30'} backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-400/30`}>
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                                            <span className="text-2xl font-bold text-emerald-400/90">{milestone.year}</span>
+                                            <h3 className="text-xl font-semibold text-white/90">{milestone.title}</h3>
+                                        </div>
+                                        <p className="mt-3 text-gray-400/80 leading-relaxed">{milestone.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="mt-8 p-6 rounded-xl bg-gradient-to-br from-gray-900/40 to-gray-800/40 border border-gray-700/30 backdrop-blur-sm">
+                        <p className="text-gray-400/80 leading-relaxed">
+                            Eccentric Technologies started out supporting traditional database technologies, and while that's still an important part of what we do, we continue to evolve in supporting modern and leading edge database technologies, including Cloud, Migration and Administration tools. With over 15 years' experience in complex database projects, we work on various technical platforms including Oracle, MySQL and Microsoft SQL Servers.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* Content Sections */}
             <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
                 <section className="bg-gray-900/30 backdrop-blur-md rounded-2xl border border-gray-700/30 p-8 flex flex-col justify-center">
@@ -90,11 +157,11 @@ const About = () => {
 
                 <section className="bg-gray-900/30 backdrop-blur-md rounded-2xl border border-gray-700/30 p-8 flex flex-col justify-center">
                     <h2 className="text-3xl font-bold text-white/90 mb-4 flex items-center">
-                        <FiMap className="mr-3 text-purple-400/80" size={28} />
-                        Our Journey
+                        <FiBriefcase className="mr-3 text-purple-400/80" size={28} />
+                        Our Expertise
                     </h2>
                     <p className="text-gray-400/80 leading-relaxed">
-                        Founded in 2015, Eccentric Systems started with a vision to bring top-tier tech solutions to enterprises. Over the years, we've grown into a trusted partner delivering excellence worldwide.
+                        Our team brings experience from leading organizations like IBM, Apple, Oracle, and Microsoft, understanding that technology must serve business goals.
                     </p>
                 </section>
 
@@ -104,34 +171,34 @@ const About = () => {
                         Why Choose Us
                     </h2>
                     <p className="text-gray-400/80 leading-relaxed">
-                        Our passion for technology, customer dedication, and a results-driven mindset make us the perfect partner for your digital transformation journey.
+                        Clients such as Burberry, Daily Mail, Wimbledon Tennis, Capita and Conde Nast continue to benefit from our unique approach to database solutions.
                     </p>
                 </section>
             </div>
 
             {/* Global Styles */}
             <style>{`
-        .bg-grid-pattern {
-          background-image:
-            linear-gradient(to right, rgba(55, 65, 81, 0.2) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(55, 65, 81, 0.2) 1px, transparent 1px);
-          background-size: 40px 40px;
-        }
-        @keyframes floatingShape {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -30px) rotate(10deg); }
-        }
-        .animate-floatingShape {
-          animation: floatingShape 12s ease-in-out infinite;
-        }
-        @keyframes pulseSlow {
-          0%, 100% { transform: scale(1); opacity: 0.3; }
-          50% { transform: scale(1.2); opacity: 0.5; }
-        }
-        .animate-pulseSlow {
-          animation: pulseSlow 15s ease-in-out infinite;
-        }
-      `}</style>
+                .bg-grid-pattern {
+                    background-image:
+                        linear-gradient(to right, rgba(55, 65, 81, 0.2) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(55, 65, 81, 0.2) 1px, transparent 1px);
+                    background-size: 40px 40px;
+                }
+                @keyframes floatingShape {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    50% { transform: translate(20px, -30px) rotate(10deg); }
+                }
+                .animate-floatingShape {
+                    animation: floatingShape 12s ease-in-out infinite;
+                }
+                @keyframes pulseSlow {
+                    0%, 100% { transform: scale(1); opacity: 0.3; }
+                    50% { transform: scale(1.2); opacity: 0.5; }
+                }
+                .animate-pulseSlow {
+                    animation: pulseSlow 15s ease-in-out infinite;
+                }
+            `}</style>
         </div>
     );
 };
