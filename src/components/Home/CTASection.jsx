@@ -1,5 +1,8 @@
 import React from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+const MotionLink = motion(Link);
 
 const CTASection = () => {
     return (
@@ -16,20 +19,14 @@ const CTASection = () => {
                                 Connect with our experts to discuss your needs.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <motion.button
+                                <MotionLink
+                                    to="/contact"
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.98 }}
                                     className="px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all"
                                 >
                                     Get Started
-                                </motion.button>
-                                <motion.button
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="px-8 py-3 bg-white/10 backdrop-blur-sm rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-all"
-                                >
-                                    Contact Sales
-                                </motion.button>
+                                </MotionLink>
                             </div>
                         </div>
                     </div>
