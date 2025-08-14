@@ -5,11 +5,10 @@ import emailjs from "@emailjs/browser"; // Updated package
 const locations = [
     {
         city: "Islamabad Office",
-        address: "3rd Floor, Beverley Centre, Jinnah Avenue, F-6/1",
+        address: "Street no 15, House no 443, Shahzad Town Islamabad",
         postal: "Islamabad 44000-Pakistan",
-        phone: "(+92-51) 111-672-253 (111-ORACLE)",
-        tel: "(051) 2814481-89",
-        fax: "(+92-51) 2814481",
+        phone: "(+92-3459533699)",
+        tel: "(+966-539932328)",
     },
 ];
 
@@ -48,24 +47,25 @@ const Contact = () => {
         setLoading(true);
         setStatus("");
 
-        emailjs
-            .send(
-                "service_hqhocvq", // EmailJS Service ID
-                "template_rf8whe6", // EmailJS Template ID
-                {
-                    from_name: formData.name,
-                    from_email: formData.email,
-                    phone: formData.phone,
-                    message: formData.message,
-                },
-                "8l-yV8LEbjunC2bCg" // EmailJS Public Key
-            )
+
+
+        emailjs.send(
+            "service_u992nfr", // EmailJS Service ID
+            "template_l389gqt", // EmailJS Template ID
+            {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                message: formData.message,
+            },
+            "SPLjJJXgTrMJFhHyk" // EmailJS Public Key
+        )
             .then(() => {
                 setStatus("✅ Message sent successfully!");
                 setFormData({ name: "", phone: "", email: "", message: "" });
 
                 // Auto-hide success message after 5 seconds
-                setTimeout(() => setStatus(""), 5000);
+                setTimeout(() => setStatus(""), 3000);
             })
             .catch(() => {
                 setStatus("❌ Failed to send message. Try again.");
@@ -94,7 +94,7 @@ const Contact = () => {
 
             <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
                 {/* Location Cards */}
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-1 gap-6">
                     {locations.map((location, index) => (
                         <div
                             key={index}
@@ -121,10 +121,7 @@ const Contact = () => {
                                             <span>{location.tel}</span>
                                         </div>
                                     )}
-                                    <div className="flex items-center text-gray-400">
-                                        <FiMail className="mr-2 text-blue-400" />
-                                        <span>Fax: {location.fax}</span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

@@ -100,7 +100,7 @@ const Services = () => {
                 <motion.div variants={itemVariants} className="flex justify-center items-center mb-8">
                     <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-emerald-400/70 mr-4"></div>
                     <span className="text-emerald-400/80 font-mono tracking-widest text-sm">
-                        ORATECH SYSTEMS
+                        ECCENTRIC TECHNOLOGIES
                     </span>
                     <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-emerald-400/70 ml-4"></div>
                 </motion.div>

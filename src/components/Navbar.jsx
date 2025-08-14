@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo from '../assets/Logo.png'
+import logo from '../assets/Logo.png'
 
 // Unicode icons since react-icons isn't available
 const MenuIcon = () => <span className="text-2xl">☰</span>;
@@ -75,7 +75,7 @@ const ModernNavbar = () => {
                                 {/* Logo image container */}
                                 <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-cyan-500/30 group-hover:shadow-cyan-500/50 transition-all duration-300 group-hover:scale-110">
                                     <img
-                                        src={Logo}  // <-- Replace this with your actual logo path
+                                        src={logo}  // <-- Replace this with your actual logo path
                                         alt="Eccentric Technologies Logo"
                                         className="w-full h-full object-cover"
                                     />
